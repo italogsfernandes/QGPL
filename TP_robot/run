@@ -1,0 +1,2 @@
+gcc dijkistra.cpp -o dijkstra.exe
+./dijkstra.exe
