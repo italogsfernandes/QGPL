@@ -82,7 +82,10 @@ void movendo(int *caminho,int *passos,int qnt,int de,int para,char *locais,int *
 //int tentdedesvio=0
 */
 /////////////////////
-void show_bool_map(bool * map_to_show, uint16_t qnt_lines, uint16_t qnt_columns);
+void show_bool_map(bool *map_to_show);
+void show_distance_map(uint32_t *distances_to_show);
+void show_steps_map(int32_t *steps_to_show);
+
 void initiate_dijkstra();
 void get_neighbors( uint32_t current_node, bool *graph_representation,
                     uint32_t *neighbors, uint32_t *qnt_neighbors);
@@ -93,10 +96,11 @@ void test_find_neighbors();
 /////////////////////
 //Global Variables //
 /////////////////////
-uint32_t qnt_lines = 5;
-uint32_t qnt_columns = 5;
-uint32_t qnt_nodes = 25;
+uint32_t qnt_lines = 7;
+uint32_t qnt_columns = 7;
+uint32_t qnt_nodes = qnt_lines*qnt_columns;
 
+bool debug_msgs_enabled = true;
 ////////////////////
 // Main Function  //
 ////////////////////
@@ -108,7 +112,7 @@ int main(){
     //test_find_neighbors();
 
     initiate_dijkstra();
-	//test_dijkistra();
+	test_dijkistra();
 	return 0;
 }
 
@@ -133,6 +137,9 @@ void test_find_neighbors(){
      * get_neighbors(current_node = 12) --> 7, 11, 13, 17
      * get_neighbors(current_node = 13) --> 8, 14, 18
      */
+    qnt_lines = 5;
+    qnt_columns = 5;
+    qnt_nodes = 5*5;
     uint32_t neighbors[4];
     uint32_t qnt_neighbors;
     bool graph_representation[5*5] = {  0, 0, 0, 0, 0,
@@ -238,34 +245,56 @@ void test_find_neighbors(){
     printf("\n\n");
 
     printf("***************************************\n");
+    qnt_lines = 7;
+    qnt_columns = 7;
+    qnt_nodes = 7*7;
 }
 
 //////////////////////////////
 // Functions Implementation //
 //////////////////////////////
 void initiate_dijkstra(){
-    bool example_map[7][7] = { {1, 1, 1, 1, 1, 1, 1},  // line 0
-                    {1, 1, 0, 0, 1, 0, 1},  // line 1
-                    {1, 0, 0, 1, 1, 0, 1},  // line 2
-                    {1, 1, 0, 0, 0, 0, 1},  // line 3
-                    {1, 1, 1, 1, 0, 0, 1},  // line 4
-                    {1, 0, 0, 0, 0, 0, 1},  // line 5
-                    {1, 0, 1, 1, 1, 1, 1}}; // line 6
-    show_bool_map((bool *) example_map, 7, 7);
+    bool example_map[7*7] = {
+                    1, 1, 1, 1, 1, 1, 1,  // line 0
+                    1, 1, 0, 0, 1, 0, 1,  // line 1
+                    1, 0, 0, 1, 1, 0, 1,  // line 2
+                    1, 1, 0, 0, 0, 0, 1,  // line 3
+                    1, 1, 1, 1, 0, 0, 1,  // line 4
+                    1, 0, 0, 0, 0, 0, 1,  // line 5
+                    1, 0, 1, 1, 1, 1, 1}; // line 6
+    if(debug_msgs_enabled){
+        show_bool_map(example_map);
+    }
 
     //uint16_t weight_matrix[7*7][7*7];
 
 }
 
-bool are_all_nodes_verified(){
+bool are_all_nodes_verified(bool *vector_of_verifed_nodes){
+    for (uint32_t i = 0; i < qnt_nodes; i++) {
+        if(vector_of_verifed_nodes[i] == false){
+            return false;
+        }
+    }
     return true;
 }
 
-void dijkstra_on_grid(uint32_t start_node, uint32_t goal_node){
-    uint32_t qnt_nodes = 7*7;
-    uint32_t qnt_lines = 7;
-    uint32_t qnt_columns = 7;
+int32_t get_node_with_min_distance(bool *vector_of_verifed_nodes,
+                                    uint32_t *distances){
+    uint32_t minimal_distance = 1 << 30;
+    int32_t node_with_min_distance = -1;
+    for (uint32_t i = 0; i < qnt_nodes; i++) {
+        if(vector_of_verifed_nodes[i] == false){
+            if(distances[i] < minimal_distance){
+                minimal_distance = distances[i];
+                node_with_min_distance = i;
+            }
+        }
+    }
+    return node_with_min_distance;
+}
 
+void dijkstra_on_grid(uint32_t start_node, uint32_t goal_node){
     /////////////////////////////////////////////////////
     // Variables to allow the dijkstra algorith to run //
     /////////////////////////////////////////////////////
@@ -277,7 +306,7 @@ void dijkstra_on_grid(uint32_t start_node, uint32_t goal_node){
     // Holds wich nodes are already verified and with are'nt.
     bool verified_nodes[qnt_nodes];
     // Indicates the node which are being analysed
-    uint32_t current_node;
+    uint32_t current_node = start_node;
     // Indicates the neighbors to each node
     uint32_t neighbors[4]; // maximum 4 neighbors considering a grid layout
     uint32_t qnt_neighbors; // some nodes could have less than 4 neighbors
@@ -294,13 +323,34 @@ void dijkstra_on_grid(uint32_t start_node, uint32_t goal_node){
         next_node[i] = -1; // There is no next node
     }
     distances[start_node] = 0; // distance to stay in the same place
+    // Debug msgs
+    if(debug_msgs_enabled){
+        printf("************************************************************\n");
+        printf("Distances:\n");
+        show_distance_map(distances);
+        printf("************************************************************\n");
+        printf("Best path:\n");
+        show_steps_map(next_node);
+    }
 
     ////////////////////////////////////////////////////////
     // Verifing each node and finding minimun distance //
     ////////////////////////////////////////////////////////
+    if(debug_msgs_enabled){
+        printf("************************************************************\n");
+        printf("next_note == %d != %d \n", next_node[current_node], goal_node);
+        printf("are_all_nodes_verified == %d == false \n", are_all_nodes_verified(verified_nodes));
+        printf("************************************************************\n");
+    }
     while(  next_node[current_node] != goal_node
-         && are_all_nodes_verified() == false){
-        //current_node = get_node_with_min_distance(nodes_not_verfied); //and node valides (not walls)
+         && are_all_nodes_verified(verified_nodes) == false){
+        current_node = get_node_with_min_distance(verified_nodes, distances); //and node valides (not walls)
+        if(debug_msgs_enabled){
+            printf("************************************************************\n");
+            printf("node with minimun distance: %d\n", current_node);
+            printf("************************************************************\n");
+            exit(0);
+        }
         //get_neighbors(current_node, graph_representation, neighbors, qnt_neighbors);
         // for each neighbor of current_node
         for (uint32_t i = 0; i < qnt_neighbors; i++){
@@ -318,27 +368,6 @@ void dijkstra_on_grid(uint32_t start_node, uint32_t goal_node){
     }
 }
 
-//TODO: NEED TO TEST THIS
-/* With a grid like this one:
- *  0  1  2  3  4
- *  5  6  7  8  9
- * 10 11 12 13 14
- * 15 16 17 18 19
- * 20 21 22 23 24
- * Where: 12 and 23 are barriers
- * get_neighbors(current_node =  0) --> 1, 5
- * get_neighbors(current_node =  4) --> 3, 9
- * get_neighbors(current_node = 20) --> 15, 21
- * get_neighbors(current_node = 24) --> 19
- * get_neighbors(current_node =  2) --> 1, 3, 7
- * get_neighbors(current_node = 10) --> 5, 11, 15
- * get_neighbors(current_node = 14) --> 9, 13, 19
- * get_neighbors(current_node = 22) --> 17, 21
- * get_neighbors(current_node = 16) --> 11, 15, 17, 21
- * get_neighbors(current_node = 11) --> 6, 10, 16
- * get_neighbors(current_node = 12) --> 7, 11, 13, 17
- * get_neighbors(current_node = 13) --> 8, 14, 18
- */
 void get_neighbors( uint32_t current_node, bool *graph_representation,
                     uint32_t *neighbors, uint32_t *qnt_neighbors){
     /* Possible Neighbors in this solution
@@ -395,7 +424,7 @@ void get_neighbors( uint32_t current_node, bool *graph_representation,
     }
 }
 
-void show_bool_map(bool *map_to_show, uint16_t qnt_lines, uint16_t qnt_columns){
+void show_bool_map(bool *map_to_show){
     for (uint16_t i = 0; i < qnt_lines; i++) {
         for (uint16_t j = 0; j < qnt_columns; j++) {
             map_to_show[j+qnt_lines*i] ? printf(" x ") : printf("   ");
@@ -403,6 +432,35 @@ void show_bool_map(bool *map_to_show, uint16_t qnt_lines, uint16_t qnt_columns){
         printf("\n");
     }
 }
+
+void show_distance_map(uint32_t *distances_to_show){
+    for (uint16_t i = 0; i < qnt_lines; i++) {
+        for (uint16_t j = 0; j < qnt_columns; j++) {
+            if(distances_to_show[j+qnt_lines*i] < (1 << 14)){
+                printf(" %3d ", distances_to_show[j+qnt_lines*i]);
+            } else {
+                printf(" %3d ", -1);
+            }
+        }
+        printf("\n");
+    }
+}
+
+void show_steps_map(int32_t *steps_to_show){
+    for (uint16_t i = 0; i < qnt_lines; i++) {
+        for (uint16_t j = 0; j < qnt_columns; j++) {
+            if(steps_to_show[j+qnt_lines*i] < qnt_nodes){
+                printf(" %3d ", steps_to_show[j+qnt_lines*i]);
+            } else {
+                printf(" %3d ", -1);
+            }
+        }
+        printf("\n");
+    }
+}
+
 void test_dijkistra(){
 	printf("Hello disgraça!\n");
+    printf("Testing dijkstra from node %d to %d.\n",43,10);
+    dijkstra_on_grid(43, 10);
 }
