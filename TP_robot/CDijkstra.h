@@ -1,19 +1,45 @@
+/* ************************************************************************** */
+/** CDijkstra Class Header
+ *  #Entreprise
+ *    UCBL1 - Polytech - QGPL
+ *  #Équipe
+ *    John Doe1
+ *    John Doe2
+ *    John Doe3
+ *    John Doe4
+ *  #Création
+ *    John Doe1 - Date
+ *  #Nom de fichier
+ *    CDijkstra.h
+ *  #Résumé
+ *    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+ *  #Description
+ *    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+ *    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+ *    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+ *    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+ *    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+ *    occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+ *    mollit anim id est laborum.
+ */
+/* ************************************************************************** */
 #ifndef DIJKSTRA_H
 #define DIJKSTRA_H
 //////////////
 // Includes //
 //////////////
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <math.h>
+#include <stdio.h>          // Printing messages with prinf
+#include <stdlib.h>         //
+#include <stdint.h>         // data type uint32_t, int32_t etc..
 
 /////////////
 // Defines //
 /////////////
-#define QNT_LINES   7
-#define QNT_COLUMNS 7
-#define QNT_NODES   QNT_LINES*QNT_COLUMNS
+#define QNT_LINES   7                       // Amount of lines
+#define QNT_COLUMNS 7                       // Amount of columns
+#define QNT_NODES   QNT_LINES*QNT_COLUMNS   // Amount of nodes
+// Enables the printing of debug msgs:
+// Comment/Uncomment for debug purposes
 #define DEBUG_MSGS_ENABLED
 //#define DEBUG_MSGS_ENABLED_LEVEL_0
 //#define DEBUG_MSGS_ENABLED_LEVEL_1
@@ -183,3 +209,6 @@ private:
     void test_find_neighbors();
 };
 #endif
+/*******************************************************************************
+ End of File
+*/

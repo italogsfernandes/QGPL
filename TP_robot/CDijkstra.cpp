@@ -1,4 +1,31 @@
+/* ************************************************************************** */
+/** CDijkstra Class Implementation
+ *  #Entreprise
+ *    UCBL1 - Polytech - QGPL
+ *  #Équipe
+ *    John Doe1
+ *    John Doe2
+ *    John Doe3
+ *    John Doe4
+ *  #Création
+ *    John Doe1 - Date
+ *  #Nom de fichier
+ *    CDijkstra.cpp
+ *  #Résumé
+ *    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+ *  #Description
+ *    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+ *    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+ *    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+ *    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+ *    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+ *    occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+ *    mollit anim id est laborum.
+ */
+/* ************************************************************************** */
+/* ************************************************************************** */
 /**
+ * NOTE:
  * DIJKISTRA PSEUDOCODE (from wikipedia)
  * function Dijkstra(Graph, source):
  *      create vertex set Q
@@ -23,6 +50,7 @@
  *
  *      return dist[], prev[]
  */
+/* ************************************************************************** */
 //////////////
 // Includes //
 //////////////
@@ -95,7 +123,7 @@ void CDijkstra::launch_algorithm(){
     //Holds the proposed distance between a node and its neighbor
     uint32_t proposed_distance;
     // Indicates the node which are being analysed
-    uint32_t current_node = start_node;
+    int32_t current_node = start_node;
     // Indicates the neighbors to each node
     uint32_t neighbors[4]; // maximum 4 neighbors considering a grid layout
     uint32_t qnt_neighbors; // some nodes could have less than 4 neighbors
@@ -141,7 +169,7 @@ void CDijkstra::launch_algorithm(){
     printf("************************************************************\n");
     #endif
     qnt_iterations = 0;
-    while(  next_nodes[current_node] != goal_node
+    while(  next_nodes[current_node] != (int32_t) goal_node
          && are_all_nodes_verified() == false){
 
         qnt_iterations ++;
@@ -184,7 +212,7 @@ void CDijkstra::launch_algorithm(){
                 distances[neighbor] = proposed_distance;
                 next_nodes[current_node] = neighbor;
                 previous_nodes[neighbor] = current_node;
-                if(next_nodes[current_node] == goal_node){
+                if(next_nodes[current_node] == (int32_t) goal_node){
                     path_found = true;
                 }
                 #ifdef DEBUG_MSGS_ENABLED_LEVEL_0
@@ -402,9 +430,9 @@ void CDijkstra::get_steps_to_goal(){
 void CDijkstra::show_bool_map(bool *map_to_show){
     for (uint16_t i = 0; i < QNT_LINES; i++) {
         for (uint16_t j = 0; j < QNT_COLUMNS; j++) {
-            if(j+QNT_LINES*i == start_node){
+            if(j+QNT_LINES*i == (int32_t) start_node){
                 printf(" S ");
-            } else if(j+QNT_LINES*i == goal_node){
+            } else if(j+QNT_LINES*i == (int32_t) goal_node){
                 printf(" G ");
             } else{
                 map_to_show[j+QNT_LINES*i] ? printf(" x ") : printf("   ");
@@ -572,12 +600,12 @@ void CDijkstra::test_find_neighbors(){
     //#define QNT_COLUMNS 5
     uint32_t neighbors[4];
     uint32_t qnt_neighbors;
-    bool graph_representation[5*5] = {  0, 0, 0, 0, 0,
+    bool new_graph_representation[5*5] = {  0, 0, 0, 0, 0,
                                         0, 0, 0, 0, 0,
                                         0, 0, 1, 0, 0,
                                         0, 0, 0, 0, 0,
                                         0, 0, 0, 1, 0};
-
+    set_graph(new_graph_representation);
     printf("get_neighbors(current_node =  0) --> 1, 5\n");
     printf("neighbors of 0: ");
     get_neighbors(0, neighbors, &qnt_neighbors);
@@ -676,3 +704,6 @@ void CDijkstra::test_find_neighbors(){
 
     printf("***************************************\n");
 }
+/*******************************************************************************
+ End of File
+*/
