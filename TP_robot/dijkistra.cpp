@@ -82,17 +82,162 @@ void movendo(int *caminho,int *passos,int qnt,int de,int para,char *locais,int *
 //int tentdedesvio=0
 */
 /////////////////////
-void initiate_dijkstra();
-void test_dijkistra();
 void show_bool_map(bool * map_to_show, uint16_t qnt_lines, uint16_t qnt_columns);
+void initiate_dijkstra();
+void get_neighbors( uint32_t current_node, bool *graph_representation,
+                    uint32_t *neighbors, uint32_t *qnt_neighbors);
+void test_dijkistra();
+
+void test_find_neighbors();
+
+/////////////////////
+//Global Variables //
+/////////////////////
+uint32_t qnt_lines = 5;
+uint32_t qnt_columns = 5;
+uint32_t qnt_nodes = 25;
+
 ////////////////////
 // Main Function  //
 ////////////////////
 int main(){
     printf("hora do show porra!\n");
+
+    // if you are unsure about the result of get_neighbors uncomment the next
+    // line to execute a manual test:
+    //test_find_neighbors();
+
     initiate_dijkstra();
-	test_dijkistra();
+	//test_dijkistra();
 	return 0;
+}
+
+void test_find_neighbors(){
+    /* With a grid like this one:
+     *  0  1  2  3  4
+     *  5  6  7  8  9
+     * 10 11 12 13 14
+     * 15 16 17 18 19
+     * 20 21 22 23 24
+     * Where: 12 and 23 are barriers
+     * get_neighbors(current_node =  0) --> 1, 5
+     * get_neighbors(current_node =  4) --> 3, 9
+     * get_neighbors(current_node = 20) --> 15, 21
+     * get_neighbors(current_node = 24) --> 19
+     * get_neighbors(current_node =  2) --> 1, 3, 7
+     * get_neighbors(current_node = 10) --> 5, 11, 15
+     * get_neighbors(current_node = 14) --> 9, 13, 19
+     * get_neighbors(current_node = 22) --> 17, 21
+     * get_neighbors(current_node = 16) --> 11, 15, 17, 21
+     * get_neighbors(current_node = 11) --> 6, 10, 16
+     * get_neighbors(current_node = 12) --> 7, 11, 13, 17
+     * get_neighbors(current_node = 13) --> 8, 14, 18
+     */
+    uint32_t neighbors[4];
+    uint32_t qnt_neighbors;
+    bool graph_representation[5*5] = {  0, 0, 0, 0, 0,
+                                        0, 0, 0, 0, 0,
+                                        0, 0, 1, 0, 0,
+                                        0, 0, 0, 0, 0,
+                                        0, 0, 0, 1, 0};
+
+    printf("get_neighbors(current_node =  0) --> 1, 5\n");
+    printf("neighbors of 0: ");
+    get_neighbors(0, graph_representation, neighbors, &qnt_neighbors);
+    for (size_t i = 0; i < qnt_neighbors; i++) {
+        printf("%d ", neighbors[i]);
+    }
+    printf("\n\n");
+
+    printf("get_neighbors(current_node =  4) --> 3, 9\n");
+    printf("neighbors of 4: ");
+    get_neighbors(4, graph_representation, neighbors, &qnt_neighbors);
+    for (size_t i = 0; i < qnt_neighbors; i++) {
+        printf("%d ", neighbors[i]);
+    }
+    printf("\n\n");
+
+    printf("get_neighbors(current_node = 20) --> 15, 21\n");
+    printf("neighbors of 20: ");
+    get_neighbors(20, graph_representation, neighbors, &qnt_neighbors);
+    for (size_t i = 0; i < qnt_neighbors; i++) {
+        printf("%d ", neighbors[i]);
+    }
+    printf("\n\n");
+
+    printf("get_neighbors(current_node = 24) --> 19\n");
+    printf("neighbors of 24: ");
+    get_neighbors(24, graph_representation, neighbors, &qnt_neighbors);
+    for (size_t i = 0; i < qnt_neighbors; i++) {
+        printf("%d ", neighbors[i]);
+    }
+    printf("\n\n");
+
+    printf("get_neighbors(current_node =  2) --> 1, 3, 7\n");
+    printf("neighbors of 2: ");
+    get_neighbors(2, graph_representation, neighbors, &qnt_neighbors);
+    for (size_t i = 0; i < qnt_neighbors; i++) {
+        printf("%d ", neighbors[i]);
+    }
+    printf("\n\n");
+
+    printf("get_neighbors(current_node = 10) --> 5, 11, 15\n");
+    printf("neighbors of 10: ");
+    get_neighbors(10, graph_representation, neighbors, &qnt_neighbors);
+    for (size_t i = 0; i < qnt_neighbors; i++) {
+        printf("%d ", neighbors[i]);
+    }
+    printf("\n\n");
+
+    printf("get_neighbors(current_node = 14) --> 9, 13, 19\n");
+    printf("neighbors of 14: ");
+    get_neighbors(14, graph_representation, neighbors, &qnt_neighbors);
+    for (size_t i = 0; i < qnt_neighbors; i++) {
+        printf("%d ", neighbors[i]);
+    }
+    printf("\n\n");
+
+    printf("get_neighbors(current_node = 22) --> 17, 21\n");
+    printf("neighbors of 22: ");
+    get_neighbors(22, graph_representation, neighbors, &qnt_neighbors);
+    for (size_t i = 0; i < qnt_neighbors; i++) {
+        printf("%d ", neighbors[i]);
+    }
+    printf("\n\n");
+
+    printf("get_neighbors(current_node = 16) --> 11, 15, 17, 21\n");
+    printf("neighbors of 16: ");
+    get_neighbors(16, graph_representation, neighbors, &qnt_neighbors);
+    for (size_t i = 0; i < qnt_neighbors; i++) {
+        printf("%d ", neighbors[i]);
+    }
+    printf("\n\n");
+
+    printf("get_neighbors(current_node = 11) --> 6, 10, 16\n");
+    printf("neighbors of 11: ");
+    get_neighbors(11, graph_representation, neighbors, &qnt_neighbors);
+    for (size_t i = 0; i < qnt_neighbors; i++) {
+        printf("%d ", neighbors[i]);
+    }
+    printf("\n\n");
+
+    printf("get_neighbors(current_node = 12) --> 7, 11, 13, 17\n");
+    printf("neighbors of 12: ");
+    get_neighbors(12, graph_representation, neighbors, &qnt_neighbors);
+    for (size_t i = 0; i < qnt_neighbors; i++) {
+        printf("%d ", neighbors[i]);
+    }
+    printf("\n\n");
+
+    printf("get_neighbors(current_node = 13) --> 8, 14, 18\n");
+    printf("neighbors of 13: ");
+    get_neighbors(13, graph_representation, neighbors, &qnt_neighbors);
+    for (size_t i = 0; i < qnt_neighbors; i++) {
+        printf("%d ", neighbors[i]);
+    }
+    printf("\n\n");
+
+    printf("***************************************\n");
 }
 
 //////////////////////////////
@@ -110,6 +255,10 @@ void initiate_dijkstra(){
 
     //uint16_t weight_matrix[7*7][7*7];
 
+}
+
+bool are_all_nodes_verified(){
+    return true;
 }
 
 void dijkstra_on_grid(uint32_t start_node, uint32_t goal_node){
@@ -151,8 +300,8 @@ void dijkstra_on_grid(uint32_t start_node, uint32_t goal_node){
     ////////////////////////////////////////////////////////
     while(  next_node[current_node] != goal_node
          && are_all_nodes_verified() == false){
-        current_node = get_node_with_min_distance(nodes_not_verfied); //and node valides (not walls)
-        get_neighbors(current_node, graph_representation, neighbors, qnt_neighbors);
+        //current_node = get_node_with_min_distance(nodes_not_verfied); //and node valides (not walls)
+        //get_neighbors(current_node, graph_representation, neighbors, qnt_neighbors);
         // for each neighbor of current_node
         for (uint32_t i = 0; i < qnt_neighbors; i++){
             neighbor = neighbors[i];
@@ -190,8 +339,8 @@ void dijkstra_on_grid(uint32_t start_node, uint32_t goal_node){
  * get_neighbors(current_node = 12) --> 7, 11, 13, 17
  * get_neighbors(current_node = 13) --> 8, 14, 18
  */
-void get_neighbors( uint32_t current_node, uint32_t *graph_representation,
-                    uint32_t *neighbors, uint32_t qnt_neighbors){
+void get_neighbors( uint32_t current_node, bool *graph_representation,
+                    uint32_t *neighbors, uint32_t *qnt_neighbors){
     /* Possible Neighbors in this solution
      * North, East, South and West:
      *     N
@@ -227,22 +376,22 @@ void get_neighbors( uint32_t current_node, uint32_t *graph_representation,
     /////////////////////////////////////
     // Consulting Graph Representation //
     /////////////////////////////////////
-    qnt_neighbors = 0;
-    if(n_neighbor != -1 && graph_representation(n_neighbor) == 0){
-        neighbors[qnt_neighbors] = n_neighbor;
-        qnt_neighbors += 1;
+    qnt_neighbors[0] = 0;
+    if(n_neighbor != -1 && graph_representation[n_neighbor] == 0){
+        neighbors[qnt_neighbors[0]] = n_neighbor;
+        qnt_neighbors[0] += 1;
     }
-    if(s_neighbor != -1 && graph_representation(s_neighbor) == 0){
-        neighbors[qnt_neighbors] = s_neighbor;
-        qnt_neighbors += 1;
+    if(s_neighbor != -1 && graph_representation[s_neighbor] == 0){
+        neighbors[qnt_neighbors[0]] = s_neighbor;
+        qnt_neighbors[0] += 1;
     }
-    if(w_neighbor != -1 && graph_representation(w_neighbor) == 0){
-        neighbors[qnt_neighbors] = w_neighbor;
-        qnt_neighbors += 1;
+    if(w_neighbor != -1 && graph_representation[w_neighbor] == 0){
+        neighbors[qnt_neighbors[0]] = w_neighbor;
+        qnt_neighbors[0] += 1;
     }
-    if(e_neighbor != -1 && graph_representation(e_neighbor) == 0){
-        neighbors[qnt_neighbors] = e_neighbor;
-        qnt_neighbors += 1;
+    if(e_neighbor != -1 && graph_representation[e_neighbor] == 0){
+        neighbors[qnt_neighbors[0]] = e_neighbor;
+        qnt_neighbors[0] += 1;
     }
 }
 
