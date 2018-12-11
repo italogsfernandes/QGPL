@@ -277,6 +277,68 @@ int32_t get_node_with_min_distance(bool *vector_of_verifed_nodes,
     return node_with_min_distance;
 }
 
+
+char get_char_encoding_of_direction(int32_t direction){
+    if(direction == -1){
+        return 'W';
+    } else if(direction == 1){
+        return 'E';
+    } else if(direction == -qnt_columns){
+        return 'N';
+    } else if(direction == qnt_columns){
+        return 'S';
+    } else if(direction == 0){
+        return '#';
+    } else {
+        return '?';
+    }
+}
+
+char get_show_encoding_of_direction(int32_t direction){
+    if(direction == -1){
+        return '-';
+    } else if(direction == 1){
+        return '-';
+    } else if(direction == -qnt_columns){
+        return '|';
+    } else if(direction == qnt_columns){
+        return '|';
+    } else if(direction == 0){
+        return '#';
+    } else {
+        return '?';
+    }
+}
+
+void show_steps_to_goal(char *steps_to_goal){
+    printf("TODO");
+}
+
+//TODO: finish this function
+//TODO: corrigir ortografia
+void get_steps_to_goal( uint32_t start_node, uint32_t goal_node,
+                        uint32_t before_goal_node,
+                        uint32_t *next_node, char *steps_to_goal,
+                        uint32_t qnt_of_steps){
+    uint32_t index_of_current_step;
+    uint32_t current_node;
+    uint32_t before_node;
+    int32_t direction;
+
+    index_of_current_step = qnt_of_steps;
+    current_node = goal_node;
+    before_node = before_goal_node;
+
+    direction =  current_node - before_node;
+    steps_to_goal[index_of_current_step] = get_char_encoding_of_direction(direction);
+
+    current_node = 0;
+    direction =  current_node - before_node;
+    steps_to_goal[index_of_current_step] = get_char_encoding_of_direction(direction);
+
+}
+
+
 void dijkstra_on_grid(uint32_t start_node, uint32_t goal_node, bool *graph_representation){
     /////////////////////////////////////////////////////
     // Variables to allow the dijkstra algorith to run //
@@ -286,6 +348,7 @@ void dijkstra_on_grid(uint32_t start_node, uint32_t goal_node, bool *graph_repre
     uint32_t proposed_distance;
     // The next node that you shold go for each node:
     int32_t next_node[qnt_nodes];
+    int32_t before_node[qnt_nodes];
     // Holds wich nodes are already verified and with are'nt.
     bool verified_nodes[qnt_nodes];
     // Indicates the node which are being analysed
@@ -296,6 +359,11 @@ void dijkstra_on_grid(uint32_t start_node, uint32_t goal_node, bool *graph_repre
     // Indicates the currently neighbor which are being analysed
     uint32_t neighbor;
 
+    ///
+    char steps_to_goal[qnt_nodes];
+    uint32_t distance_to_goal;
+    ///
+
     ////////////////////////////////////////////////////////////////////////
     // Sets the distances between the origin end each node to infinite //
     // Sets no next node to each node                                  //
@@ -305,8 +373,11 @@ void dijkstra_on_grid(uint32_t start_node, uint32_t goal_node, bool *graph_repre
         verified_nodes[i] = false;
         distances[i] = 1 << 30; // Infinite (considering the worst scenary)
         next_node[i] = -1; // There is no next node
+        before_node[i] = -1; // There is no next node
     }
     distances[start_node] = 0; // distance to stay in the same place
+    next_node[goal_node] = goal_node;
+    before_node[start_node] = start_node;
     // Debug msgs
     if(debug_msgs_enabled){
         printf("************************************************************\n");
@@ -315,6 +386,9 @@ void dijkstra_on_grid(uint32_t start_node, uint32_t goal_node, bool *graph_repre
         printf("************************************************************\n");
         printf("Best path:\n");
         show_steps_map(next_node);
+        printf("************************************************************\n");
+        printf("Inverse path:\n");
+        show_steps_map(before_node);
     }
 
     ////////////////////////////////////////////////////////
@@ -322,7 +396,7 @@ void dijkstra_on_grid(uint32_t start_node, uint32_t goal_node, bool *graph_repre
     ////////////////////////////////////////////////////////
     if(debug_msgs_enabled){
         printf("************************************************************\n");
-        printf("next_note == %d != %d \n", next_node[current_node], goal_node);
+        printf("next node == %d != %d \n", next_node[current_node], goal_node);
         printf("are_all_nodes_verified == %d == false \n", are_all_nodes_verified(verified_nodes));
         printf("************************************************************\n");
     }
@@ -356,6 +430,7 @@ void dijkstra_on_grid(uint32_t start_node, uint32_t goal_node, bool *graph_repre
             if (distances[neighbor] > proposed_distance){
                 distances[neighbor] = proposed_distance;
                 next_node[current_node] = neighbor;
+                before_node[neighbor] = current_node;
                 if(debug_msgs_enabled){
                     printf("************************************************************\n");
                     printf("Distances:\n");
@@ -363,6 +438,9 @@ void dijkstra_on_grid(uint32_t start_node, uint32_t goal_node, bool *graph_repre
                     printf("************************************************************\n");
                     printf("Best path:\n");
                     show_steps_map(next_node);
+                    printf("************************************************************\n");
+                    printf("Inverse path:\n");
+                    show_steps_map(before_node);
                 }
             }
         }
@@ -467,6 +545,7 @@ void show_steps_map(int32_t *steps_to_show){
 }
 
 void test_dijkistra(){
+    printf("antes do hello\n");
     bool example_map[7*7] = {
                     1, 1, 1, 1, 1, 1, 1,  // line 0
                     1, 1, 0, 0, 1, 0, 1,  // line 1
