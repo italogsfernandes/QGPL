@@ -59,9 +59,8 @@ void CDijkstra::set_start_node(uint32_t new_start_node){
  */
 void CDijkstra::set_goal_node(uint32_t new_goal_node){
     goal_node = new_goal_node;
-    if(analysed == true){
-        //TODO: don't need to re-analyse it
-    }
+    path_found = false;
+    analysed = false;
 }
 
 /**
@@ -119,7 +118,7 @@ void CDijkstra::launch_algorithm(){
     previous_nodes[start_node] = start_node;
 
     // Debug messages
-    #ifdef DEBUG_MSGS_ENABLED
+    #ifdef DEBUG_MSGS_ENABLED_LEVEL_0
     printf("************************************************************\n");
     printf("Distances:\n");
     show_distance_map(distances);
@@ -135,7 +134,7 @@ void CDijkstra::launch_algorithm(){
     ////////////////////////////////////////////////////////
     // Verifing each node and finding minimun distance //
     ////////////////////////////////////////////////////////
-    #ifdef DEBUG_MSGS_ENABLED
+    #ifdef DEBUG_MSGS_ENABLED_LEVEL_0
     printf("************************************************************\n");
     printf("next node == %d != %d \n", next_nodes[current_node], goal_node);
     printf("are_all_nodes_verified == %d == false \n", are_all_nodes_verified());
@@ -146,7 +145,7 @@ void CDijkstra::launch_algorithm(){
          && are_all_nodes_verified() == false){
 
         qnt_iterations ++;
-        #ifdef DEBUG_MSGS_ENABLED
+        #ifdef DEBUG_MSGS_ENABLED_LEVEL_0
         printf("###### ITERATION NUMBER: %d ######\n", qnt_iterations);
         #endif
 
@@ -154,7 +153,7 @@ void CDijkstra::launch_algorithm(){
         if(current_node == -1){ //Protection
             break;
         }
-        #ifdef DEBUG_MSGS_ENABLED
+        #ifdef DEBUG_MSGS_ENABLED_LEVEL_0
         printf("************************************************************\n");
         printf("node with minimun distance: %d\n", current_node);
         #endif
@@ -188,7 +187,7 @@ void CDijkstra::launch_algorithm(){
                 if(next_nodes[current_node] == goal_node){
                     path_found = true;
                 }
-                #ifdef DEBUG_MSGS_ENABLED
+                #ifdef DEBUG_MSGS_ENABLED_LEVEL_0
                 printf("************************************************************\n");
                 printf("Distances:\n");
                 show_distance_map(distances);
@@ -213,7 +212,7 @@ void CDijkstra::launch_algorithm(){
     }
     analysed = true;
 
-    #ifdef DEBUG_MSGS_ENABLED
+    #ifdef DEBUG_MSGS_ENABLED_LEVEL_0
     printf("************************************************************\n");
     if(path_found){
         printf("###### PATH FOUND WITH %d ITERATIONS ######\n", qnt_iterations);
@@ -224,7 +223,8 @@ void CDijkstra::launch_algorithm(){
     #endif
 
     if(path_found){
-        //TODO: get_steps_to_goal
+        distance_to_goal = distances[goal_node];
+        get_steps_to_goal();
     }
 }
 
@@ -370,16 +370,23 @@ void CDijkstra::get_steps_to_goal(){
     uint32_t previous_node;
     int32_t direction;
 
-    index_of_current_step = distance_to_goal;
+    index_of_current_step = distance_to_goal-1;
     current_node = goal_node;
 
      while (current_node != start_node) {
          previous_node = previous_nodes[current_node];
-         direction =  current_node - previous_node;
+         direction = current_node - previous_node;
          steps_to_goal[index_of_current_step] = get_char_encoding_of_direction(direction);
+         #ifdef DEBUG_MSGS_ENABLED_STEPS_TO_GOAL
+         printf("%d - direction from %d to %d: %c (%d)\n",
+          index_of_current_step,
+          previous_node,
+          current_node,
+          steps_to_goal[index_of_current_step],
+          direction);
+         #endif
          index_of_current_step -= 1;
          current_node = previous_node;
-         //TODO: finish
      }
 }
 
@@ -395,7 +402,13 @@ void CDijkstra::get_steps_to_goal(){
 void CDijkstra::show_bool_map(bool *map_to_show){
     for (uint16_t i = 0; i < QNT_LINES; i++) {
         for (uint16_t j = 0; j < QNT_COLUMNS; j++) {
-            map_to_show[j+QNT_LINES*i] ? printf(" x ") : printf("   ");
+            if(j+QNT_LINES*i == start_node){
+                printf(" S ");
+            } else if(j+QNT_LINES*i == goal_node){
+                printf(" G ");
+            } else{
+                map_to_show[j+QNT_LINES*i] ? printf(" x ") : printf("   ");
+            }
         }
         printf("\n");
     }
@@ -450,27 +463,28 @@ void CDijkstra::show_steps_to_goal(bool arrows){
     }
     printf("%c.\n", steps_to_goal[i]);
 
+    printf("\t");
     if(arrows){
         for (i = 0; i < distance_to_goal-1; i++) {
             if(steps_to_goal[i] == 'N'){
-                printf("* ");
+                printf("*  ");
             } else if(steps_to_goal[i] == 'S'){
-                printf(". ");
-            } else if(steps_to_goal[i] == 'N'){
-                printf("> ");
-            } else if(steps_to_goal[i] == 'N'){
-                printf("< ");
+                printf(".  ");
+            } else if(steps_to_goal[i] == 'E'){
+                printf(">  ");
+            } else if(steps_to_goal[i] == 'W'){
+                printf("<  ");
             } else {
-                printf("%c ", steps_to_goal[i]);
+                printf("%c  ", steps_to_goal[i]);
             }
         }
         if(steps_to_goal[i] == 'N'){
             printf("*\n");
         } else if(steps_to_goal[i] == 'S'){
             printf(".\n");
-        } else if(steps_to_goal[i] == 'N'){
+        } else if(steps_to_goal[i] == 'E'){
             printf(">\n");
-        } else if(steps_to_goal[i] == 'N'){
+        } else if(steps_to_goal[i] == 'W'){
             printf("<\n");
         } else {
             printf("%c\n", steps_to_goal[i]);
@@ -482,12 +496,13 @@ void CDijkstra::show_steps_to_goal(bool arrows){
  * Show some relevant public and private data.
  */
 void CDijkstra::show_data_members(){
-    printf("********************Some Data*******************\n");
+    printf("********************Some Data**********************\n");
     printf("\tanalysed:         %s\n", analysed?"yes":"no");
-    printf("\tpath found:        %s\n", path_found?"yes":"no");
+    printf("\tpath found:       %s\n", path_found?"yes":"no");
     printf("\tstart node:       %d\n", start_node);
     printf("\tgoal node:        %d\n", goal_node);
     printf("\tdistance to goal: %d\n", distance_to_goal);
+    printf("\titerations:       %d\n", qnt_iterations);
 }
 
 ///////////
@@ -513,16 +528,19 @@ void CDijkstra::global_test(){
                     1, 0, 1, 1, 1, 1, 1}; // line 6
     set_graph(example_map);
     set_start_node(43);
-    set_goal_node(12);
+    set_goal_node(10);
+    launch_algorithm();
     #ifdef DEBUG_MSGS_ENABLED
     printf("********************GLOBAL TEST********************\n");
     show_bool_map(graph_representation);
     printf("***************************************************\n");
     printf("Testing dijkstra from node %d to %d.\n",start_node, goal_node);
     printf("***************************************************\n");
+    show_steps_to_goal(true);
+    printf("***************************************************\n");
     show_data_members();
+    printf("***************************************************\n");
     #endif
-    launch_algorithm();
 }
 
 /**
