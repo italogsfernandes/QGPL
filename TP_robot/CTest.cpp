@@ -26,17 +26,49 @@
 //////////////
 // Includes //
 //////////////
-
+#include "CTest.h"
 
 /////////////////
 // Constructor //
 /////////////////
+CTest::CTest(){
+    ;
+}
 
+CTest::~CTest(){
+    ;
+}
 
 ////////////////////
 // Public Methods //
 ////////////////////
+int CTest::test_lire_carte_et_afficher(){
+    printf("TODO");
+}
 
+int CTest::test_chercher_cinq_objets(){
+    printf("TODO");
+}
+
+int CTest::test_chercher_object_en_contournant_un_obstacle(){
+    printf("TODO");
+}
+
+int CTest::test_introduction_character_incorrect(){
+    printf("TODO");
+}
+
+int CTest::lancer_tests(){
+    printf("TODO");
+}
+
+int CTest::test_executer_programme_3min(){
+    printf("TODO");
+}
+
+int CTest::test_meme_resultats(){
+    printf("TODO");
+}
 
 /////////////////////
 // Private Methods //

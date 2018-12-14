@@ -40,10 +40,21 @@
 ///////////
 class CTest {
 private:
-    /* data */
-
+    ////////////////////
+    // Portee Private //
+    ////////////////////
 public:
-    CTest (arguments);
+    //////////////////
+    // Porte Public //
+    //////////////////
+    int test_lire_carte_et_afficher();
+    int test_chercher_cinq_objets();
+    int test_chercher_object_en_contournant_un_obstacle();
+    int test_introduction_character_incorrect();
+    int lancer_tests();
+    int test_executer_programme_3min();
+    int test_meme_resultats();
+    CTest ();
     virtual ~CTest ();
 };
 #endif
