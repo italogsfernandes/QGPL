@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /** CObjet Class Header
- *  #Entreprise
- *    UCBL1 - Polytech - QGPL
- *  #Équipe
-    LY Hélène
-    RUIZ CANADA Paula
-    SAMPAIO FERNANDES Italo Gustavo
-    IRUMVA Bella
+*  #Entreprise
+*    UCBL1 - Polytech - QGPL
+*  #Équipe
+   LY Hélène
+   RUIZ CANADA Paula
+   SAMPAIO FERNANDES Italo Gustavo
+   IRUMVA Bella
 
- *  #Nom de fichier
- *    CObjet.h
- *  #Résumé
- *    Identification de l'objet et sa position.
- *  #Description
+*  #Résumé
+*    Identification de l'objet et sa position.
+*  #Description
 
- */
+*/
 /* ************************************************************************** */
 #ifndef COBJET_H
 #define COBJET_H
