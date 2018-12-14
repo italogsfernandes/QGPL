@@ -32,7 +32,6 @@
 // Constructor //
 /////////////////
 CSalle::CSalle(){
-    ;
 }
 
 CSalle::~CSalle(){
@@ -42,8 +41,24 @@ CSalle::~CSalle(){
 ////////////////////
 // Public Methods //
 ////////////////////
+/*
+void CRobot::demander_ID_objet(){
+    int id_objet;
+    cout << "Tapez le ID de l’objet que vous voulez que je prenne:\n";
+    salle.show_objet_list();
+}*/
 
-
+void CSalle::show_objet_list(){
+    cout << "Helene est en train de faire ça\n";
+    for (int i = 0; i < qnt_obj; i++) {
+        m_liste_des_objets[i].get_description();
+    }
+}
+/*
+void CObjet::get_description(){
+    cout << m_ID << " - " << m_nom_objet << " - " << m_Abreviation << "\n";
+}
+*/
 /////////////////////
 // Private Methods //
 /////////////////////

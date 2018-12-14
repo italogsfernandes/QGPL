@@ -35,8 +35,8 @@ using namespace std;
 // Main Function  //
 ////////////////////
 int main(){
-    CRobot example_robot;
-    example_robot = CRobot();
+    CRobot robot;
+    robot.launch();
     return 0;
 
     // Instanciating a object of dijkstra class

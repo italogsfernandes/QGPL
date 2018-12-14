@@ -29,6 +29,7 @@
 // Includes //
 //////////////
 #include <stdio.h>          // Printing messages with prinf
+#include "CRobot.h"
 
 //////////////
 // Defines  //

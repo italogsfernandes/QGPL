@@ -43,7 +43,8 @@ CTest::~CTest(){
 // Public Methods //
 ////////////////////
 int CTest::test_lire_carte_et_afficher(){
-    printf("TODO");
+    CRobot example_robot;
+    example_robot = CRobot();
     return 0;
 }
 

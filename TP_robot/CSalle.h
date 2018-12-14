@@ -28,7 +28,9 @@
 //////////////
 // Includes //
 //////////////
-
+#include <string>
+#include <iostream>
+using namespace std;
 
 //////////////
 // Defines  //
@@ -41,10 +43,12 @@
 class CSalle {
 private:
     /* data */
-
 public:
     CSalle ();
     virtual ~CSalle ();
+    //NOTE: change poir public
+    string m_nom_fichier_carte_original;
+    void show_objet_list();
 };
 #endif
 /*******************************************************************************

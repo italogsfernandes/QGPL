@@ -28,7 +28,7 @@
 //////////////
 // Includes //
 //////////////
-#include<iostream>
+#include <iostream>
 #include <string>
 #include "CSalle.h"
 #include "CObjet.h"
@@ -48,6 +48,7 @@ private:
     CSalle salle;
     int deplacements[2500];
     CObjet objet_a_chercher;
+    CDijkstra algorithm_dijkstra; //NOTE: ce nest pas au CDC
 
 public:
     //////////////////
@@ -58,7 +59,7 @@ public:
     void trouver_chemin(int fin_x, int fin_y);
     int get_distance();
     void launch();
-    //string demander_nom_ficher_carte();
+    string demander_nom_ficher_carte();
     int demander_ID_objet();
     void executer_chemin();
     void trouver_chemin_retour();
