@@ -59,6 +59,7 @@ void CRobot::trouver_chemin(int fin_x, int fin_y){
 
 int CRobot::get_distance(){
     printf("TODO");
+    return 0;
 }
 
 void CRobot::launch(){
@@ -67,10 +68,13 @@ void CRobot::launch(){
 
 string CRobot::demander_nom_ficher_carte(){
     printf("TODO");
+    return "not implemented"
 }
 
 int CRobot::demander_ID_objet(){
     printf("TODO");
+    return 0;
+
 }
 
 void CRobot::executer_chemin(){

@@ -44,30 +44,37 @@ CTest::~CTest(){
 ////////////////////
 int CTest::test_lire_carte_et_afficher(){
     printf("TODO");
+    return 0;
 }
 
 int CTest::test_chercher_cinq_objets(){
     printf("TODO");
+    return 0;
 }
 
 int CTest::test_chercher_object_en_contournant_un_obstacle(){
     printf("TODO");
+    return 0;
 }
 
 int CTest::test_introduction_character_incorrect(){
     printf("TODO");
+    return 0;
 }
 
 int CTest::lancer_tests(){
     printf("TODO");
+    return 0;
 }
 
 int CTest::test_executer_programme_3min(){
     printf("TODO");
+    return 0;
 }
 
 int CTest::test_meme_resultats(){
     printf("TODO");
+    return 0;
 }
 
 /////////////////////

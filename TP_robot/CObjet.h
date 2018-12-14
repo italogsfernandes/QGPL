@@ -55,7 +55,7 @@ public:
     ////////////////////
     // Public Methods //
     ////////////////////
-    CObjet (arguments);
+    CObjet ();
     virtual ~CObjet ();
 };
 #endif

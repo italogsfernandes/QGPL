@@ -28,7 +28,7 @@
 //////////////
 // Includes //
 //////////////
-
+#include <stdio.h>          // Printing messages with prinf
 
 //////////////
 // Defines  //

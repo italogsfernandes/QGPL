@@ -28,7 +28,7 @@
 //////////////
 // Includes //
 //////////////
-#include <string.h>
+#include <string>
 #include "CSalle.h"
 #include "CObjet.h"
 

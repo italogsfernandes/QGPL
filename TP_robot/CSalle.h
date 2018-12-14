@@ -43,7 +43,7 @@ private:
     /* data */
 
 public:
-    CSalle (arguments);
+    CSalle ();
     virtual ~CSalle ();
 };
 #endif
