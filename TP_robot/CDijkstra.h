@@ -8,8 +8,6 @@
    SAMPAIO FERNANDES Italo Gustavo
    IRUMVA Bella
 
-*  #Nom de fichier
-*    CObjet.h
 *  #Résumé
 *    Identification de l'objet et sa position.
 *  #Description
