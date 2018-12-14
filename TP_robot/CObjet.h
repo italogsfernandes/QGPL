@@ -43,7 +43,7 @@ public:
     /////////////////
     // Public Data //
     /////////////////
-    string m_Abreviation; // la représentation visuelle de l'objet  sur l' interface type string :
+    char m_Abreviation; // la représentation visuelle de l'objet  sur l' interface type string :
     int m_ID; //le numéro unique pour identifier chaque objet   type int
     int m_Coord_X;//la coordonnée X de l'objet  dans la salle type int
     int m_Coord_Y; //la coordonnée Y de l'objet  dans la salle type int

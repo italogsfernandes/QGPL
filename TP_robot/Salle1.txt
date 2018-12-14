@@ -1,0 +1,49 @@
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+x  A    B                                        x
+x                                   D            x
+x C                                              x
+x                                                x
+x                                                x
+x                                                x
+x                                           E    x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+xxxxxxxxxxxxxxxxxxxxxxxxx                        x
+x                                                x
+x                                                x
+x                                                x
+x                                                x
+x                                               Rx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

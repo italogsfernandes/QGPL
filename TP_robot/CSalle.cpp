@@ -49,18 +49,50 @@ CSalle::~CSalle ()
 ////////////////////
 void CSalle::lire_room()
 {
-/*
-    string file = m_nom_fichier_carte_original;
+    cout << "**************************************************\n";
+    cout << "Je suis en train de lire la carte.\n";
+    ifstream fileIN(m_nom_fichier_carte_original.c_str());
     string line;
-    while (getline(file,line))
+    stringstream ss;
+
+    int column = 0;
+    int coodernee = 0;
+    if (fileIN.is_open())
     {
-        for (i=0, i)
+        while (getline(fileIN,line))
+        {
+            ss << line << "\n";
+            //cout << line << "\n";
+            column += 1;
+            for (int i = 0; i < 50; i++) {
+                coodernee = column * 50 + i;
+                if(line[i] == 'x'){ // obstacle
+                    m_carte_de_la_salle[coodernee] = true;
+                } else if(line[i] == 'R'){ //robot
+                    m_carte_de_la_salle[coodernee] = false;
+                } else if(line[i] == ' '){ //vide
+                    m_carte_de_la_salle[coodernee] = false;
+                } else { //objets
+                    m_carte_de_la_salle[coodernee] = false;
+                    for (int i = 0; i < m_quantite_des_objets; i++) {
+                        if(m_liste_des_objets[i].m_Abreviation == line[i]){
+                            m_liste_des_objets[i].m_Coord_X = i;
+                            m_liste_des_objets[i].m_Coord_Y = column;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        cout << "Unable to open file";
     }
-*/
+    fileIN.close();
+    m_representation_visuel = ss.str();
 }
 void CSalle::show_room()
 {
-
+    cout << m_representation_visuel;
 }
 
 void CSalle::show_object_list()
@@ -76,8 +108,13 @@ void CSalle::show_object_list()
 
 void CSalle::read_object_list()
 {
-    ifstream fileIN(m_nom_fichier_carte_original.c_str());
-    string  var1, var4, var7, var10, var13;
+    stringstream ss;
+    ss << "Objet_" << m_nom_fichier_carte_original;
+    string nom_ficher_obj = ss.str();
+
+    cout << "Je suis en train de lire: " << nom_ficher_obj << "\n";
+    ifstream fileIN(nom_ficher_obj.c_str());
+    char    var1, var4, var7, var10, var13;
     string  var2, var5, var8, var11, var14;
     int     var3, var6, var9, var12, var15;
 
@@ -98,8 +135,9 @@ void CSalle::read_object_list()
         fileIN >> var13;
         fileIN >> var14;
         fileIN >> var15;
-    } else
+    } else {
         cout << "Unable to open file";
+    }
     fileIN.close();
 
     m_liste_des_objets[0].m_Abreviation = var1;

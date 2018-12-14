@@ -33,7 +33,7 @@
 /////////////////
 CObjet::CObjet ()
 {
-    m_Abreviation = "DEFAULT";
+    m_Abreviation = '0';
     m_ID = 0;
     m_Coord_X = 0;
     m_Coord_Y = 0;
@@ -51,7 +51,7 @@ CObjet::~CObjet ()
 void CObjet::get_description()
 {
     //On va lire m_liste_des_objets qui a été lu par CSalle
-    cout << m_Abreviation << "-" << m_nom_objet << "-" << m_ID << "\n";
+    cout << m_Abreviation << " - " << m_nom_objet << " - " << m_ID << "\n";
 }
 
 /*******************************************************************************

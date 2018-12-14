@@ -35,8 +35,8 @@
 /////////////
 // Defines //
 /////////////
-#define QNT_LINES   7                       // Amount of lines
-#define QNT_COLUMNS 7                       // Amount of columns
+#define QNT_LINES   50                       // Amount of lines
+#define QNT_COLUMNS 50                      // Amount of columns
 #define QNT_NODES   QNT_LINES*QNT_COLUMNS   // Amount of nodes
 // Enables the printing of debug msgs:
 // Comment/Uncomment for debug purposes

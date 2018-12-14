@@ -32,8 +32,8 @@
 // Constructor //
 /////////////////
 CRobot::CRobot(){
-    m_coordonee_robot_y = 0;
-    m_coordonee_robot_x = 0;
+    m_coordonee_robot_y = 49;
+    m_coordonee_robot_x = 49;
     cout << "Je vien de etre initilize.\n";
 }
 
@@ -54,15 +54,14 @@ void CRobot::deplacer(int deplacement){
 }
 
 void CRobot::trouver_chemin(int fin_x, int fin_y){
-    algorithm_dijkstra.set_graph(salle.m_carte_de_la_salle);
     algorithm_dijkstra.set_start_node(m_coordonee_robot_y*50+m_coordonee_robot_x);
     algorithm_dijkstra.set_goal_node(fin_y*50+fin_x);
     algorithm_dijkstra.launch_algorithm();
 
     cout << "********************DEBBUGING ********************\n";
-    algorithm_dijkstra.show_bool_map(graph_representation);
+    algorithm_dijkstra.show_bool_map(salle.m_carte_de_la_salle);
     cout << "***************************************************\n";
-    cout << "Testing dijkstra from node %d to %d.\n",start_node, goal_node);
+    cout << "Testing dijkstra from node %d to %d.\n" << algorithm_dijkstra.start_node << " - " << algorithm_dijkstra.goal_node;
     cout << "***************************************************\n";
     algorithm_dijkstra.show_steps_to_goal(true);
     cout << "***************************************************\n";
@@ -85,9 +84,12 @@ Limites: Si l’utilisateur introduit un caractère incorrect alors le robot aff
 void CRobot::launch(){
     // Demander quelle salle
     salle.m_nom_fichier_carte_original = demander_nom_ficher_carte();
+    salle.read_object_list();
+    salle.lire_room();
+    algorithm_dijkstra.set_graph(salle.m_carte_de_la_salle);
     // Demander quelle est le objet
     int id_obj = demander_ID_objet();
-    for (int i = 0; i < salle.qnt; i++) {
+    for (int i = 0; i < salle.m_quantite_des_objets; i++) {
          if(salle.m_liste_des_objets[i].m_ID == id_obj){
              objet_a_chercher = salle.m_liste_des_objets[i];
              break;
@@ -97,6 +99,8 @@ void CRobot::launch(){
     // Le terminal affichera ensuite un plan de la salle
     salle.show_room();
     //  Trajet
+    trouver_chemin(objet_a_chercher.m_Coord_X, objet_a_chercher.m_Coord_Y);
+    exit(0);
     //trouver_chemin(objet_a_chercher.m_Coord_X, objet_a_chercher.m_Coord_Y);
 }
 
@@ -116,13 +120,13 @@ string CRobot::demander_nom_ficher_carte(){
     string salle_nom;
     switch (numero_salle) {
         case 1:
-        salle_nom = "salle1.txt";
+        salle_nom = "Salle1.txt";
         break;
         case 2:
-        salle_nom = "salle2.txt";
+        salle_nom = "Salle2.txt";
         break;
         case 3:
-        salle_nom = "salle3.txt";
+        salle_nom = "Salle3.txt";
         break;
         default:
         cout << "**************************************************\n";
@@ -154,7 +158,7 @@ int CRobot::demander_ID_objet(){
      */
     int id_objet;
     cout << "Tapez le ID de l’objet que vous voulez que je prenne:\n";
-    salle.show_objet_list();
+    salle.show_object_list();
     cout << "Appuyez: ";
     cin >> id_objet;
     cout << "Tu as choisi l'objet: " << id_objet << "\n";
