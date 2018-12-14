@@ -28,9 +28,12 @@
 //////////////
 // Includes //
 //////////////
+#include<iostream>
 #include <string>
 #include "CSalle.h"
 #include "CObjet.h"
+#include "CDijkstra.h"
+using namespace std;
 
 ///////////
 // Class //
@@ -55,7 +58,7 @@ public:
     void trouver_chemin(int fin_x, int fin_y);
     int get_distance();
     void launch();
-    string demander_nom_ficher_carte();
+    //string demander_nom_ficher_carte();
     int demander_ID_objet();
     void executer_chemin();
     void trouver_chemin_retour();

@@ -36,6 +36,7 @@ CRobot::CRobot(){
     m_coordonee_robot_x = 0;
     salle = CSalle();
     objet_a_chercher = CObjet();
+    cout << "Je vien de etre initilize.\n";
 }
 
 CRobot::~CRobot(){
@@ -66,10 +67,10 @@ void CRobot::launch(){
     printf("TODO");
 }
 
-string CRobot::demander_nom_ficher_carte(){
-    printf("TODO");
-    return "not implemented"
-}
+// string CRobot::demander_nom_ficher_carte(){
+//     printf("TODO");
+//     return "not implemented"
+// }
 
 int CRobot::demander_ID_objet(){
     printf("TODO");

@@ -27,13 +27,18 @@
 // Includes //
 //////////////
 #include <iostream>         // comentar as bibioteca
-#include "CDijkstra.h"      //
+#include "CDijkstra.h"
+#include "CRobot.h"
 using namespace std;
 
 ////////////////////
 // Main Function  //
 ////////////////////
 int main(){
+    CRobot example_robot;
+    example_robot = CRobot();
+    return 0;
+
     // Instanciating a object of dijkstra class
     CDijkstra example_dijkstra_algo;
     example_dijkstra_algo = CDijkstra();

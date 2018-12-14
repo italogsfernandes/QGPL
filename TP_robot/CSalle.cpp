@@ -26,12 +26,18 @@
 //////////////
 // Includes //
 //////////////
-
+#include "CSalle.h"
 
 /////////////////
 // Constructor //
 /////////////////
+CSalle::CSalle(){
+    ;
+}
 
+CSalle::~CSalle(){
+    ;
+}
 
 ////////////////////
 // Public Methods //
