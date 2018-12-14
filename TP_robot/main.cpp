@@ -41,7 +41,6 @@ int main(){
 
     // Instanciating a object of dijkstra class
     CDijkstra example_dijkstra_algo;
-    example_dijkstra_algo = CDijkstra();
     example_dijkstra_algo.global_test();
 
     // if you are unsure about the result of get_neighbors uncomment the next

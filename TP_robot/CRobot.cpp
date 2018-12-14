@@ -97,7 +97,7 @@ void CRobot::launch(){
     // Le terminal affichera ensuite un plan de la salle
     salle.show_room();
     //  Trajet
-    trouver_chemin(objet_a_chercher.m_Coord_X, objet_a_chercher.m_Coord_Y);
+    //trouver_chemin(objet_a_chercher.m_Coord_X, objet_a_chercher.m_Coord_Y);
 }
 
 /**
