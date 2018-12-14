@@ -26,21 +26,60 @@
 //////////////
 // Includes //
 //////////////
-
+#include "CRobot.h"
 
 /////////////////
 // Constructor //
 /////////////////
+CRobot::CRobot(){
+    m_coordonee_robot_y = 0;
+    m_coordonee_robot_x = 0;
+    salle = CSalle();
+    objet_a_chercher = CObjet();
+}
 
+CRobot::~CRobot(){
+    ;
+}
 
 ////////////////////
 // Public Methods //
 ////////////////////
+void CRobot::prendre_objet(){
+    printf("TODO");
+}
 
+void CRobot::deplacer(int deplacement){
+    printf("TODO");
+}
 
-/////////////////////
-// Private Methods //
-/////////////////////
+void CRobot::trouver_chemin(int fin_x, int fin_y){
+    printf("TODO");
+}
+
+int CRobot::get_distance(){
+    printf("TODO");
+}
+
+void CRobot::launch(){
+    printf("TODO");
+}
+
+string CRobot::demander_nom_ficher_carte(){
+    printf("TODO");
+}
+
+int CRobot::demander_ID_objet(){
+    printf("TODO");
+}
+
+void CRobot::executer_chemin(){
+    printf("TODO");
+}
+
+void CRobot::trouver_chemin_retour(){
+    printf("TODO");
+}
 
 
 /*******************************************************************************

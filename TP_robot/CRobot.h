@@ -28,22 +28,38 @@
 //////////////
 // Includes //
 //////////////
-
-
-//////////////
-// Defines  //
-//////////////
-
+#include <string.h>
+#include "CSalle.h"
+#include "CObjet.h"
 
 ///////////
 // Class //
 ///////////
 class CRobot {
 private:
-    /* data */
+    ////////////////////
+    // Portee Private //
+    ////////////////////
+    int m_coordonee_robot_y;
+    int m_coordonee_robot_x;
+    CSalle salle;
+    int deplacements[2500];
+    CObjet objet_a_chercher;
 
 public:
-    CRobot (arguments);
+    //////////////////
+    // Porte Public //
+    //////////////////
+    void prendre_objet();
+    void deplacer(int deplacement);
+    void trouver_chemin(int fin_x, int fin_y);
+    int get_distance();
+    void launch();
+    string demander_nom_ficher_carte();
+    int demander_ID_objet();
+    void executer_chemin();
+    void trouver_chemin_retour();
+    CRobot ();
     virtual ~CRobot ();
 };
 #endif
