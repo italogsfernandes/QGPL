@@ -45,7 +45,7 @@ CRobot::~CRobot(){
 // Public Methods //
 ////////////////////
 void CRobot::prendre_objet(){
-    show_steps_to_goal(true);
+    algorithm_dijkstra.show_steps_to_goal(true);
 }
 
 void CRobot::deplacer(int deplacement){
@@ -60,13 +60,13 @@ void CRobot::trouver_chemin(int fin_x, int fin_y){
     algorithm_dijkstra.launch_algorithm();
 
     cout << "********************DEBBUGING ********************\n";
-    show_bool_map(graph_representation);
+    algorithm_dijkstra.show_bool_map(graph_representation);
     cout << "***************************************************\n";
     cout << "Testing dijkstra from node %d to %d.\n",start_node, goal_node);
     cout << "***************************************************\n";
-    show_steps_to_goal(true);
+    algorithm_dijkstra.show_steps_to_goal(true);
     cout << "***************************************************\n";
-    show_data_members();
+    algorithm_dijkstra.show_data_members();
     cout << "***************************************************\n";
 }
 

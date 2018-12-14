@@ -30,12 +30,9 @@
 //////////////
 #include <string>
 #include <iostream>
+#include <fstream>
+#include "CObjet.h"
 using namespace std;
-
-//////////////
-// Defines  //
-//////////////
-
 
 ///////////
 // Class //
@@ -43,13 +40,23 @@ using namespace std;
 class CSalle {
 private:
     /* data */
+    string m_nom_fichier_carte_modifie;
+    string m_representation_visuel;
+    int m_carte_de_la_salle[50*50];
+
 public:
+    string m_nom_fichier_carte_original;
+    CObjet m_liste_des_objets[100];
+    int m_quantite_des_objets;
     CSalle ();
     virtual ~CSalle ();
-    //NOTE: change poir public
-    string m_nom_fichier_carte_original;
-    void show_objet_list();
+    void lire_room();
+    void show_room();
+    void read_object_list();
+    void show_object_list();
+    void enregistrer_carte_modifie();
 };
+
 #endif
 /*******************************************************************************
  End of File

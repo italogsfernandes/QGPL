@@ -3,24 +3,17 @@
  *  #Entreprise
  *    UCBL1 - Polytech - QGPL
  *  #Équipe
- *    John Doe1
- *    John Doe2
- *    John Doe3
- *    John Doe4
- *  #Création
- *    John Doe1 - Date
+    LY Hélène
+    RUIZ CANADA Paula
+    SAMPAIO FERNANDES Italo Gustavo
+    IRUMVA Bella
+
  *  #Nom de fichier
  *    CObjet.h
  *  #Résumé
- *    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+ *    Identification de l'objet et sa position.
  *  #Description
- *    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
- *    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
- *    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
- *    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
- *    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
- *    occaecat cupidatat non proident, sunt in culpa qui officia deserunt
- *    mollit anim id est laborum.
+
  */
 /* ************************************************************************** */
 #ifndef COBJET_H
@@ -28,12 +21,9 @@
 //////////////
 // Includes //
 //////////////
-
-
-//////////////
-// Defines  //
-//////////////
-
+#include <string>
+#include <iostream>
+using namespace std;
 
 ///////////
 // Class //
@@ -47,16 +37,27 @@ private:
     /////////////////////
     // Private Methods //
     /////////////////////
+protected:
+
 public:
     /////////////////
     // Public Data //
     /////////////////
-    void get_description();
+    string m_Abreviation; // la représentation visuelle de l'objet  sur l' interface type string :
+    int m_ID; //le numéro unique pour identifier chaque objet   type int
+    int m_Coord_X;//la coordonnée X de l'objet  dans la salle type int
+    int m_Coord_Y; //la coordonnée Y de l'objet  dans la salle type int
+    bool m_il_est_pris; //pour indiquer  si oui ou non l'objet est pris  type bool
+    string m_nom_objet;
+
     ////////////////////
     // Public Methods //
     ////////////////////
     CObjet ();
     virtual ~CObjet ();
+    void get_description();
+
+
 };
 #endif
 /*******************************************************************************

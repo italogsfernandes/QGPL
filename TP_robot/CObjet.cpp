@@ -27,43 +27,32 @@
 // Includes //
 //////////////
 #include "CObjet.h"
-/*
-void lire_ficher_text(){
-    CObjet list_de_objet[5];
-
-    // Lire ficher
-    list_de_objet[0] = CObjet();
-    list_de_objet[0].ID = //ficher line 1
-    list_de_objet[0].mAbreviation = //ficher line 1 part 2
-    list_de_objet[0].m_description = 'A';
-
-    list_de_objet[0].ID = //ficher line 1
-    list_de_objet[0].mAbreviation = ficher line 1 part 2
-    list_de_objet[0].m_description = 'A';
-}
-*/
 
 /////////////////
 // Constructor //
 /////////////////
-CObjet::CObjet(){
-    ;
+CObjet::CObjet ()
+{
+    m_Abreviation = "DEFAULT";
+    m_ID = 0;
+    m_Coord_X = 0;
+    m_Coord_Y = 0;
+    m_il_est_pris = 0;
 }
 
-CObjet::~CObjet(){
-    ;
-}
+CObjet::~CObjet ()
+{
 
+}
 
 ////////////////////
 // Public Methods //
 ////////////////////
-
-
-/////////////////////
-// Private Methods //
-/////////////////////
-
+void CObjet::get_description()
+{
+    //On va lire m_liste_des_objets qui a été lu par CSalle
+    cout << m_Abreviation << "-" << m_nom_objet << "-" << m_ID << "\n";
+}
 
 /*******************************************************************************
  End of File
