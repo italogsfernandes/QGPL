@@ -32,8 +32,8 @@
 // Constructor //
 /////////////////
 CRobot::CRobot(){
-    m_coordonee_robot_y = 49;
-    m_coordonee_robot_x = 49;
+    m_coordonee_robot_y = 48;
+    m_coordonee_robot_x = 48;
     cout << "Je vien de etre initilize.\n";
 }
 
@@ -54,14 +54,17 @@ void CRobot::deplacer(int deplacement){
 }
 
 void CRobot::trouver_chemin(int fin_x, int fin_y){
+    cout << "***************************************************\n";
+    cout << fin_y*50+fin_x << "\n";
+    cout << "***************************************************\n";
+
     algorithm_dijkstra.set_start_node(m_coordonee_robot_y*50+m_coordonee_robot_x);
     algorithm_dijkstra.set_goal_node(fin_y*50+fin_x);
     algorithm_dijkstra.launch_algorithm();
 
     cout << "********************DEBBUGING ********************\n";
-    algorithm_dijkstra.show_bool_map(salle.m_carte_de_la_salle);
-    cout << "***************************************************\n";
-    cout << "Testing dijkstra from node %d to %d.\n" << algorithm_dijkstra.start_node << " - " << algorithm_dijkstra.goal_node;
+    cout << "Testing dijkstra: " << algorithm_dijkstra.start_node << " - " << algorithm_dijkstra.goal_node << "\n";
+    algorithm_dijkstra.show_data_members();
     cout << "***************************************************\n";
     algorithm_dijkstra.show_steps_to_goal(true);
     cout << "***************************************************\n";
@@ -96,6 +99,9 @@ void CRobot::launch(){
          }
     }
     objet_a_chercher.get_description();
+    objet_a_chercher.m_Coord_X = 4;
+    objet_a_chercher.m_Coord_Y = 1;
+    cout << objet_a_chercher.m_Coord_X << " - " << objet_a_chercher.m_Coord_Y << "\n";
     // Le terminal affichera ensuite un plan de la salle
     salle.show_room();
     //  Trajet

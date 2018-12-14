@@ -67,13 +67,13 @@ void CSalle::lire_room()
             for (int i = 0; i < 50; i++) {
                 coodernee = column * 50 + i;
                 if(line[i] == 'x'){ // obstacle
-                    m_carte_de_la_salle[coodernee] = true;
+                    m_carte_de_la_salle[coodernee] = false;
                 } else if(line[i] == 'R'){ //robot
-                    m_carte_de_la_salle[coodernee] = false;
+                    m_carte_de_la_salle[coodernee] = true;
                 } else if(line[i] == ' '){ //vide
-                    m_carte_de_la_salle[coodernee] = false;
+                    m_carte_de_la_salle[coodernee] = true;
                 } else { //objets
-                    m_carte_de_la_salle[coodernee] = false;
+                    m_carte_de_la_salle[coodernee] = true;
                     for (int i = 0; i < m_quantite_des_objets; i++) {
                         if(m_liste_des_objets[i].m_Abreviation == line[i]){
                             m_liste_des_objets[i].m_Coord_X = i;

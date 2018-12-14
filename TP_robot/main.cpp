@@ -38,15 +38,6 @@ int main(){
     CRobot robot;
     robot.launch();
     return 0;
-
-    // Instanciating a object of dijkstra class
-    CDijkstra example_dijkstra_algo;
-    example_dijkstra_algo.global_test();
-
-    // if you are unsure about the result of get_neighbors uncomment the next
-    // line to execute a manual test:
-    //test_find_neighbors();
-	return 0;
 }
 /*******************************************************************************
  End of File
